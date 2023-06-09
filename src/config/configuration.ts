@@ -1,7 +1,9 @@
 import { registerAs } from '@nestjs/config';
+import * as Joi from 'joi';
 
 export default registerAs('env', () => ({
   nodeEnv: process.env.NODE_ENV,
+  urlFE: process.env.URL_FRONTEND,
   port: parseInt(process.env.PORT),
   clientPort: process.env.URL_FRONTEND,
   database: {
@@ -26,12 +28,38 @@ export default registerAs('env', () => ({
   },
   token: {
     accessToken: {
-      publicPath: process.env.ACCESS_TOKEN_PUBLIC_KEY_PATH,
-      privatePath: process.env.ACCESS_TOKEN_PRIVATE_KEY_PATH,
+      secret: process.env.ACCESS_TOKEN_SECRET,
+      expirationTime: process.env.ACCESS_TOKEN_EXPIRATION_TIME,
     },
     refreshToken: {
-      publicPath: process.env.REFRESH_TOKEN_PRIVATE_KEY_PATH,
-      privatePath: process.env.REFRESH_TOKEN_PUBLIC_KEY_PATH,
+      secret: process.env.REFRESH_TOKEN_SECRET,
+      expirationTime: process.env.REFRESH_TOKEN_EXPIRATION_TIME,
     },
   },
 }));
+
+export const validationSchema = Joi.object({
+  PORT: Joi.number().required(),
+  NODE_ENV: Joi.string().required(),
+  URL_FRONTEND: Joi.string().required(),
+
+  POSTGRES_HOST: Joi.string().required(),
+  POSTGRES_PORT: Joi.number().required(),
+  POSTGRES_USER: Joi.string().required(),
+  POSTGRES_PASSWORD: Joi.string().required(),
+  POSTGRES_DB: Joi.string().required(),
+  DATABASE_TYPE: Joi.string().required(),
+  DATABASE_SYNCHRONIZE: Joi.boolean().required(),
+  DATABASE_MAX_CONNECTIONS: Joi.number().required(),
+  DATABASE_SSL_ENABLED: Joi.string().required(),
+  DATABASE_REJECT_UNAUTHORIZED: Joi.boolean().required(),
+  DATABASE_CA: Joi.optional().default(null),
+  DATABASE_KEY: Joi.optional().default(null),
+  DATABASE_CERT: Joi.optional().default(null),
+
+  URL_REDIS: Joi.string().required(),
+  ACCESS_TOKEN_SECRET: Joi.string().required(),
+  REFRESH_TOKEN_SECRET: Joi.string().required(),
+  ACCESS_TOKEN_EXPIRATION_TIME: Joi.number().required(),
+  REFRESH_TOKEN_EXPIRATION_TIME: Joi.number().required(),
+});

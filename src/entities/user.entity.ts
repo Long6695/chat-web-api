@@ -1,6 +1,6 @@
 import { Entity, Column, Index, BeforeInsert, OneToOne } from 'typeorm';
 import Model from './model.entity';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import { Profile } from './profile.entity';
 
 export enum RoleEnumType {
@@ -27,12 +27,17 @@ export class User extends Model {
     enum: RoleEnumType,
     default: RoleEnumType.USER,
   })
-  role: RoleEnumType.USER;
+  role: RoleEnumType;
 
   @Column({
     default: 'default.png',
   })
   photo: string;
+
+  @Column({
+    nullable: true,
+  })
+  hashRT: string;
 
   @Column({
     default: false,
@@ -48,7 +53,8 @@ export class User extends Model {
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password, 12);
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
   }
 
   static async comparePasswords(
