@@ -6,10 +6,9 @@ import { FindOneOptions, UpdateResult } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { EntityId } from 'typeorm/repository/EntityId';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserServiceInterface } from './interface/user.service.interface';
 
 @Injectable()
-export class UserService implements UserServiceInterface {
+export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   public async create(userDto: CreateUserDto): Promise<User> {
