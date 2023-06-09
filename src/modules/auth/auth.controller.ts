@@ -30,6 +30,7 @@ export class AuthController {
     const { user } = req;
     await this.authService.login(user, response);
     return {
+      status: 'success',
       message: 'Login successfully!',
     };
   }
@@ -62,6 +63,7 @@ export class AuthController {
   logout(@Req() req, @Res({ passthrough: true }) response: Response) {
     this.authService.logout(req.user, response);
     return {
+      status: 'success',
       message: 'Logout successfully!',
     };
   }
@@ -71,7 +73,8 @@ export class AuthController {
   refreshToken(@Req() req, @Res({ passthrough: true }) response: Response) {
     this.authService.refreshToken(req.user, response);
     return {
-      message: 'Success',
+      status: 'success',
+      message: 'Refresh token successfully!',
     };
   }
 }

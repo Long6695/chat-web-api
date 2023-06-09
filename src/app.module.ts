@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import configuration, { validationSchema } from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './User/User.module';
-import { TokenModule } from './token/token.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/User.module';
+import { TokenModule } from './modules/token/token.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,7 +25,5 @@ import { TokenModule } from './token/token.module';
     UserModule,
     TokenModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
