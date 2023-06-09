@@ -2,14 +2,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { RoleEnumType, User } from 'src/entities/user.entity';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { RegisterAuthDto } from './dto/register-auth.dto';
-import { AuthServiceInterface } from './interface/auth.service.interface';
-import { TokenService } from 'src/token/token.service';
+import { TokenService } from 'src/modules/token/token.service';
 
 @Injectable()
-export class AuthService implements AuthServiceInterface {
+export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly tokenService: TokenService,

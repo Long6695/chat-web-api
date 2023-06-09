@@ -11,10 +11,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['log'],
   });
-  app.use(helmet());
-  app.enableCors();
-  app.use(cookieParser());
   const configService = app.get(ConfigService);
+  app.use(helmet());
+  app.enableCors({
+    origin: configService.get('env.urlFE'),
+  });
+  app.use(cookieParser());
   // app.use(csurf({ cookie: { sameSite: true } }));
   app.enableCors({
     origin: configService.get('env.urlFE'),
@@ -27,6 +29,6 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.listen(8000);
+  await app.listen(configService.get('env.port') || 8000);
 }
 bootstrap();
