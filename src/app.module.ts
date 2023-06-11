@@ -7,6 +7,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/User.module';
 import { TokenModule } from './modules/token/token.module';
+import { ProfileModule } from './modules/profile/profile.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,6 +25,7 @@ import { TokenModule } from './modules/token/token.module';
     AuthModule,
     UserModule,
     TokenModule,
+    ProfileModule,
   ],
 })
 export class AppModule {}

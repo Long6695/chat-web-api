@@ -18,10 +18,14 @@ import { LocalAuthGuard } from './guards/local.guard';
 import { HasRoles } from './roles.decorator';
 import { RolesGuard } from './guards/role.guard';
 import { RoleUpdateDto } from './dto/role-update.dto';
+import { UserService } from '../user/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -39,7 +43,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('admin')
   onlyAdmin(@Req() req) {
-    return req.user;
+    return this.userService.findOne({
+      where: { id: req.user.id },
+      relations: ['profile'],
+    });
   }
 
   @UseGuards(JwtAuthGuard)
