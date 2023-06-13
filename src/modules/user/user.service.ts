@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/entities/user.entity';
+import { ProfileService } from 'src/modules/profile/profile.service';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { UserRepository } from 'src/repositories/user.repository';
 import { FindOneOptions, UpdateResult } from 'typeorm';
