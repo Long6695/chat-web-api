@@ -3,6 +3,7 @@ import { User } from 'src/entities/user.entity';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { UserService } from 'src/modules/user/user.service';
+import { ReqTypes } from 'src/modules/auth/interface/auth-payload.interface';
 
 @Controller('user')
 export class UserController {
@@ -16,7 +17,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  public async me(@Req() req) {
+  public async me(@Req() req: ReqTypes) {
     return this.userService.findOne({
       where: { id: req.user.id },
       relations: ['profile'],
