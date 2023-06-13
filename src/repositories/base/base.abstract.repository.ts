@@ -23,6 +23,10 @@ export abstract class BaseAbstractRepository<T extends HasId>
     this.entity = entity;
   }
 
+  public create(data: DeepPartial<T>): T {
+    return this.entity.create(data);
+  }
+
   public async save(data: DeepPartial<T>): Promise<T> {
     return await this.entity.save(data);
   }
@@ -40,6 +44,10 @@ export abstract class BaseAbstractRepository<T extends HasId>
 
   public async findByCondition(filterCondition: FindOneOptions<T>): Promise<T> {
     return await this.entity.findOne(filterCondition);
+  }
+
+  public async findWithRelation(relations: FindManyOptions<T>): Promise<T> {
+    return await this.entity.findOne(relations);
   }
 
   public async findWithRelations(relations: FindManyOptions<T>): Promise<T[]> {

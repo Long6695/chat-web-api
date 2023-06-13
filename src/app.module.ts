@@ -24,6 +24,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
     AuthModule,
     UserModule,
     TokenModule,
+    ProfileModule,
   ],
 })
 export class AppModule {}

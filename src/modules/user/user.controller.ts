@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Req,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -23,8 +24,11 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  public async me(@Request() req) {
-    return req.user;
+  public async me(@Req() req) {
+    return this.userService.findOne({
+      where: { id: req.user.id },
+      relations: ['profile'],
+    });
   }
 
   @UseGuards(JwtAuthGuard)

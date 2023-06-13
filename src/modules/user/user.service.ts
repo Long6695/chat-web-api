@@ -9,15 +9,17 @@ import { EntityId } from 'typeorm/repository/EntityId';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly profileService: ProfileService,
+  ) {}
 
   public async create(userDto: CreateUserDto): Promise<User> {
     try {
-      const user = new User();
-      user.name = userDto.name;
-      user.email = userDto.email;
-      user.password = userDto.password;
-      return await this.userRepository.save(user);
+      const user = this.userRepository.create(userDto);
+      const savedUser = await this.userRepository.save(user);
+      await this.profileService.create(savedUser.id);
+      return savedUser;
     } catch (error) {
       if (error?.code === '23505') {
         throw new HttpException(

@@ -21,7 +21,10 @@ import { HasRoles } from 'src/modules/auth/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -39,7 +42,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('admin')
   onlyAdmin(@Req() req) {
-    return req.user;
+    return this.userService.findOne({
+      where: { id: req.user.id },
+      relations: ['profile'],
+    });
   }
 
   @UseGuards(JwtAuthGuard)
