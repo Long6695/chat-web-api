@@ -6,7 +6,7 @@ import { TypeOrmConfigService } from 'src/database/typeorm-config.service';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { ProfileModule } from 'src/modules/profile/profile.module';
 import { TokenModule } from 'src/modules/token/token.module';
-import { UserModule } from 'src/modules/user/User.module';
+import { UserModule } from 'src/modules/user/user.module';
 import { DataSource, DataSourceOptions } from 'typeorm';
 @Module({
   imports: [
