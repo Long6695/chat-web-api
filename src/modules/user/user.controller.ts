@@ -6,10 +6,10 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
 import { User } from 'src/entities/user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserService } from './user.service';
+import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
+import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
+import { UserService } from 'src/modules/user/user.service';
 
 @Controller('user')
 export class UserController {

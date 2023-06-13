@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import configuration, { validationSchema } from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfigService } from './database/typeorm-config.service';
+import configuration, { validationSchema } from 'src/config/configuration';
+import { TypeOrmConfigService } from 'src/database/typeorm-config.service';
+import { AuthModule } from 'src/modules/auth/auth.module';
+import { TokenModule } from 'src/modules/token/token.module';
+import { UserModule } from 'src/modules/user/User.module';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { AuthModule } from './modules/auth/auth.module';
-import { UserModule } from './modules/user/User.module';
-import { TokenModule } from './modules/token/token.module';
 @Module({
   imports: [
     ConfigModule.forRoot({

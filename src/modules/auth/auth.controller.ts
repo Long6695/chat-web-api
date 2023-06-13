@@ -10,14 +10,14 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { RoleEnumType, User } from 'src/entities/user.entity';
-import { AuthService } from './auth.service';
-import { RegisterAuthDto } from './dto/register-auth.dto';
-import JwtRefreshGuard from './guards/jwt-rt.guard';
-import { JwtAuthGuard } from './guards/jwt.guard';
-import { LocalAuthGuard } from './guards/local.guard';
-import { HasRoles } from './roles.decorator';
-import { RolesGuard } from './guards/role.guard';
-import { RoleUpdateDto } from './dto/role-update.dto';
+import { AuthService } from 'src/modules/auth/auth.service';
+import { RegisterAuthDto } from 'src/modules/auth/dto/register-auth.dto';
+import { RoleUpdateDto } from 'src/modules/auth/dto/role-update.dto';
+import JwtRefreshGuard from 'src/modules/auth/guards/jwt-rt.guard';
+import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard';
+import { LocalAuthGuard } from 'src/modules/auth/guards/local.guard';
+import { RolesGuard } from 'src/modules/auth/guards/role.guard';
+import { HasRoles } from 'src/modules/auth/roles.decorator';
 
 @Controller('auth')
 export class AuthController {

@@ -1,7 +1,7 @@
-import { Entity, Column, Index, BeforeInsert, OneToOne } from 'typeorm';
-import Model from './model.entity';
 import * as bcrypt from 'bcryptjs';
-import { Profile } from './profile.entity';
+import Model from 'src/entities/model.entity';
+import { Profile } from 'src/entities/profile.entity';
+import { BeforeInsert, Column, Entity, Index, OneToOne } from 'typeorm';
 
 export enum RoleEnumType {
   ADMIN = 'admin',

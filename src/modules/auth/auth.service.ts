@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { RoleEnumType, User } from 'src/entities/user.entity';
-import { UserService } from 'src/modules/user/user.service';
-import { LoginAuthDto } from './dto/login-auth.dto';
-import { RegisterAuthDto } from './dto/register-auth.dto';
+import { LoginAuthDto } from 'src/modules/auth/dto/login-auth.dto';
+import { RegisterAuthDto } from 'src/modules/auth/dto/register-auth.dto';
 import { TokenService } from 'src/modules/token/token.service';
+import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 export class AuthService {

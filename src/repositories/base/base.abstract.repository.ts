@@ -6,7 +6,7 @@ import {
   Repository,
   UpdateResult,
 } from 'typeorm';
-import { BaseInterfaceRepository } from '../interfaces/base.interface.repository';
+import { BaseInterfaceRepository } from 'src/repositories/interfaces/base.interface.repository';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { EntityId } from 'typeorm/repository/EntityId';
 
