@@ -16,13 +16,13 @@ export const AppDataSource = new DataSource({
   dropSchema: false,
   keepConnectionAlive: true,
   logging: process.env.NODE_ENV !== 'production',
-  entities: ['dist/**/*.entity.js'],
-  migrations: ['dist/database/migrations/*.js'],
-  // cli: {
-  //   entitiesDir: 'src',
-  //   migrationsDir: 'src/database/migrations',
-  //   subscribersDir: 'subscriber',
-  // },
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+  cli: {
+    entitiesDir: 'src',
+    migrationsDir: 'src/database/migrations',
+    subscribersDir: 'subscriber',
+  },
   extra: {
     max: process.env.DATABASE_MAX_CONNECTIONS
       ? parseInt(process.env.DATABASE_MAX_CONNECTIONS, 10)

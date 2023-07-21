@@ -19,6 +19,7 @@ import { LocalAuthGuard } from 'src/modules/auth/guards/local.guard';
 import { RolesGuard } from 'src/modules/auth/guards/role.guard';
 import { HasRoles } from 'src/modules/auth/roles.decorator';
 import { UserService } from 'src/modules/user/user.service';
+import { ReqTypes } from 'src/modules/auth/interface/auth-payload.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -30,7 +31,10 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   @HttpCode(200)
-  async login(@Req() req, @Res({ passthrough: true }) response: Response) {
+  async login(
+    @Req() req: ReqTypes,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const { user } = req;
     await this.authService.login(user, response);
     return {
@@ -42,16 +46,15 @@ export class AuthController {
   @HasRoles(RoleEnumType.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('admin')
-  onlyAdmin(@Req() req) {
+  onlyAdmin(@Req() req: ReqTypes) {
     return this.userService.findOne({
       where: { id: req.user.id },
-      relations: ['profile'],
     });
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('role')
-  async updateRole(@Req() req, @Body() body: RoleUpdateDto) {
+  async updateRole(@Req() req: ReqTypes, @Body() body: RoleUpdateDto) {
     await this.authService.updateRole(req.user, body.role);
     return {
       status: 'success',
@@ -67,7 +70,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   @HttpCode(200)
-  logout(@Req() req, @Res({ passthrough: true }) response: Response) {
+  logout(@Req() req: ReqTypes, @Res({ passthrough: true }) response: Response) {
     this.authService.logout(req.user, response);
     return {
       status: 'success',
@@ -77,7 +80,10 @@ export class AuthController {
 
   @UseGuards(JwtRefreshGuard)
   @Post('refresh-token')
-  refreshToken(@Req() req, @Res({ passthrough: true }) response: Response) {
+  refreshToken(
+    @Req() req: ReqTypes,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     this.authService.refreshToken(req.user, response);
     return {
       status: 'success',

@@ -20,9 +20,6 @@ export class AuthService {
         where: {
           email: loginAuthDto.email,
         },
-        relations: {
-          profile: true,
-        },
       });
       await this.verifyPassword(loginAuthDto.password, user.password);
       return user;

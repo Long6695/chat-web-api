@@ -34,13 +34,13 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       keepConnectionAlive: true,
       logging:
         this.configService.get('env.nodeEnv', { infer: true }) !== 'production',
-      entities: ['dist/**/*.entity.js'],
-      migrations: ['dist/database/migrations/*.js'],
-      // cli: {
-      //   entitiesDir: 'src',
-      //   migrationsDir: 'src/database/migrations',
-      //   subscribersDir: 'subscriber',
-      // },
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+      cli: {
+        entitiesDir: 'src',
+        migrationsDir: 'src/database/migrations',
+        subscribersDir: 'subscriber',
+      },
       extra: {
         max: this.configService.get('env.database.postgres.maxConnections', {
           infer: true,
