@@ -49,7 +49,6 @@ export class AuthController {
   onlyAdmin(@Req() req: ReqTypes) {
     return this.userService.findOne({
       where: { id: req.user.id },
-      relations: ['profile'],
     });
   }
 

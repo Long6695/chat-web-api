@@ -18,9 +18,8 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   public async me(@Req() req: ReqTypes) {
-    return this.userService.findOne({
+    return await this.userService.findOne({
       where: { id: req.user.id },
-      relations: ['profile'],
     });
   }
 

@@ -1,6 +1,5 @@
 import Model from 'src/entities/model.entity';
-import { User } from 'src/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 @Entity('profile')
 export class Profile extends Model {
@@ -38,8 +37,4 @@ export class Profile extends Model {
 
   @Column()
   userId: string;
-
-  @OneToOne(() => User, (user) => user.profile, { onDelete: 'CASCADE' })
-  @JoinColumn()
-  user: User;
 }

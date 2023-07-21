@@ -1,7 +1,16 @@
 import * as bcrypt from 'bcryptjs';
 import Model from 'src/entities/model.entity';
-import { Profile } from 'src/entities/profile.entity';
-import { BeforeInsert, Column, Entity, Index, OneToOne } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
+import { Profile } from './profile.entity';
+import { Group } from './group.entity';
 
 export enum RoleEnumType {
   ADMIN = 'admin',
@@ -10,12 +19,17 @@ export enum RoleEnumType {
 
 @Entity('user')
 export class User extends Model {
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 40,
+    nullable: false,
+  })
   name: string;
 
   @Index('email_index')
   @Column({
     unique: true,
+    nullable: false,
   })
   email: string;
 
@@ -40,16 +54,33 @@ export class User extends Model {
   hashRT: string;
 
   @Column({
+    type: 'boolean',
     default: false,
   })
   verified: boolean;
 
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  isReported: number;
+
+  @Column({
+    type: 'boolean',
+    default: false,
+  })
+  isBlocked: boolean;
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
+
+  @OneToMany(() => Group, (group) => group.user)
+  groups: Group[];
+
   toJSON() {
     return { ...this, password: undefined, verified: undefined };
   }
-
-  @OneToOne(() => Profile, (profile) => profile.user)
-  profile: Profile;
 
   @BeforeInsert()
   async hashPassword() {
